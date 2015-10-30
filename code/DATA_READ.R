@@ -9,10 +9,10 @@ data_directory="J:/Github/BIOMEBGC/test_data/"
 name_ann<-"qh_out.annout.ascii"
 name_month<-"qh_out.monavgout.ascii"
 
-num_blocks<-3
+num_blocks<-1
 
 num_ID<-24/num_blocks
-
+name_ID<-c(1:num_ID)
 year_start<-1995
 year_end<-2012
 num_year<-year_end-year_start+1
@@ -68,12 +68,33 @@ for (num_block in 1:num_blocks) {
   data_final_mon<-array(0,c(16,num_ID,num_year))
   data_final_ann<-array(0,c(16,num_ID,num_year))
   
+  a<-1  
+  for (ID in 1:num_ID) {
   
+    for (Y in 1:num_year) {
+      
+      
+      name_ID[ID]<-data_ann[a,1]
+      
+   #   print(data_ann[a,1])
+      
+      #       for (M in 1:12){
+      #         
+      #         data_final_mon[n_var,ID,a]<-data_linshi_mon[a,n_var+1]
+      #         
+      #       }
+     a<-a+1 
+    }
+  
+  
+  }
+  
+ 
   for (n_var in 1:16 ){
     
-   
+   a<-1
     for (ID in 1:num_ID) {
-      a<-1
+      
       for (Y in 1:num_year) {
         
         
@@ -84,7 +105,7 @@ for (num_block in 1:num_blocks) {
   #         data_final_mon[n_var,ID,a]<-data_linshi_mon[a,n_var+1]
   #         
   #       }
-        
+        a=a+1
       }
     }
    
@@ -98,7 +119,7 @@ for (num_block in 1:num_blocks) {
     
   output_name_ann[n_var]<-paste(data_directory,out_name[n_var],"_ANN","_",as.character(num_block),".csv",sep='')
   
-  write.table(data_final_ann[n_var,,],file=output_name_ann[n_var],sep = ",", row.names =FALSE,col.names = as.character(name_cols_ann) ) #col.names = "as.character(c(1:1))",
+  write.table(data.frame(name_ID,data_final_ann[n_var,,]),file=output_name_ann[n_var],sep = ",", row.names =FALSE,col.names = c("ID",as.character(name_cols_ann)) ) #col.names = "as.character(c(1:1))",
   
   }
 
